@@ -1,0 +1,37 @@
+{{define "form"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulaire</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <h1>Formulaire de soumission</h1>
+
+    {{if .ErrorMessage}}
+        <div style="color: red;">{{.ErrorMessage}}</div>
+    {{end}}
+
+    <form action="/form/treatment" method="POST">
+        <label for="name">Nom :</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" required>
+
+        <label for="birth">Date de naissance :</label>
+        <input type="date" id="birth" name="birth" required>
+
+        <label for="sexe">Sexe :</label>
+        <select id="sexe" name="sexe" required>
+            <option value="Homme">Homme</option>
+            <option value="Femme">Femme</option>
+        </select>
+
+        <button type="submit">Soumettre</button>
+    </form>
+</body>
+</html>
+{{end}}

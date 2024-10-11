@@ -1,0 +1,46 @@
+{{define "display"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>PAGE DISPLAY</h1>
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Résultats du formulaire</title>
+</head>
+<body>
+    <h1>Résultats de la soumission</h1>
+    {{if .CheckNom}}
+        <p>Nom : {{.Nom}}</p>
+    {{else}}
+        <p>Nom invalide !</p>
+    {{end}}
+
+    {{if .CheckPrenom}}
+        <p>Prénom : {{.Prenom}}</p>
+    {{else}}
+        <p>Prénom invalide !</p>
+    {{end}}
+
+    {{if .CheckBirth}}
+        <p>Date de naissance : {{.Birth}}</p>
+    {{else}}
+        <p>Date de naissance invalide !</p>
+    {{end}}
+
+    {{if .CheckSexe}}
+        <p>Sexe : {{.Sexe}}</p>
+    {{else}}
+        <p>Sexe invalide !</p>
+    {{end}}
+</body>
+</html>
+</body>
+</html>
+{{end}}

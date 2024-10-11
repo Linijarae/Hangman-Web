@@ -1,0 +1,22 @@
+{{define "change"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title> Nombre de vues </title>
+</head>
+<body>
+    <h1>Nombre de vue de la page</h1>
+    {{if .Modulo}}
+    <h2>Vous avez visité la page un nombre de fois ... Pair ! </h2>
+    <h3> Exactement : {{.Vues}} fois.</h3>
+    {{else}}
+    <h2>Vous avez visité la page un nombre de fois ... Impair ! </h2>
+    <h3> Exactement : {{.Vues}} fois.</h3>
+    
+    {{end}}
+</body>
+</html>
+{{end}}

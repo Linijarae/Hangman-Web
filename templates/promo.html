@@ -1,0 +1,29 @@
+{{define "promo"}}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title> Promotion </title>
+</head>
+<body>
+    <div>
+    <h3>Nom de la Classe : {{.Nomdeclasse}}</h3>
+    <h3>Votre filière : {{.Filiere}}</h3>
+    <h3>Votre niveau : {{.Niveau}}</h3>
+    <h3>Nombre d'étudiants : {{.Nbetudiants}}</h3>
+</div>
+    <h2> Informations sur les étudiants : </h2>
+    {{range .Etudiants}}
+    <h3>{{.Prenom}} {{.Nom}} {{.Age}}</h3>
+    {{if .Sexe}}
+    <img src="img/Homme.jpg" alt="Symbole Homme" />
+    {{else}}
+    <img src="img/Femme.png" alt="Symbole Femme" />
+    {{end}}
+    {{end}}
+    
+</body>
+</html>
+{{end}}
