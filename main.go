@@ -54,20 +54,23 @@ func main() {
 	}
 
 	var stockForm = StockForm{false, "", false, "", false, "", false, "", ""}
-
+	//gestion des erreurs
 	temp, err := template.ParseGlob("templates/*.html")
 	if err != nil {
 		fmt.Printf("ERREUR => %s", err.Error())
 		os.Exit(02)
 	}
-
+	//Excecution du template promo
 	http.HandleFunc("/promo", func(w http.ResponseWriter, r *http.Request) {
 		dataPage := Promo{"B1 Cybersécurité", "Cybersécurité", "B1", 5, []Etudiants{{"Al", "Capone", 20, true}, {"Ali", "Baba", 18, true}, {"Jude", "Holy", 25, false}, {"Marie", "Joseph", 32, false}, {"Tani", "Turnher", 21, false}}}
 		temp.ExecuteTemplate(w, "promo", dataPage)
 	})
 
+	//Excecution du template change
 	http.HandleFunc("/change", func(w http.ResponseWriter, r *http.Request) {
+		// Incrémentation de la variable vue ( nombres de vue de la page)
 		vues++
+		//Pour savoir si le nombre de vue est pair ou impair j'utilise un modulo.
 		modulo := vues%2 == 0
 		data := Change{
 			Vues:   vues,
@@ -75,17 +78,17 @@ func main() {
 		}
 		temp.ExecuteTemplate(w, "change", data)
 	})
-
+	//Excecution du formulaire
 	http.HandleFunc("/form", func(w http.ResponseWriter, r *http.Request) {
 		temp.ExecuteTemplate(w, "form", stockForm)
 	})
-
+	//Traitement des informations entrées par l'utilisateur dans le formulaire
 	http.HandleFunc("/form/treatment", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			http.Redirect(w, r, "/erreur?code=400&message=La méthode utilisée est incorrecte", http.StatusSeeOther)
 			return
 		}
-
+		//Vérification des informations pour éviter les erreurs
 		CheckNom, _ := regexp.MatchString("^[a-zA-Z-]{1,64}$", r.FormValue("name"))
 		CheckPrenom, _ := regexp.MatchString("^[a-zA-Z-]{1,64}$", r.FormValue("prenom"))
 		Birth := r.FormValue("birth")
@@ -104,24 +107,25 @@ func main() {
 			CheckSexe:   CheckSexe,
 			Sexe:        Sexe,
 		}
-
+		//Erreur dans le prénom et le nom
 		if !CheckPrenom && !CheckNom {
 			stockForm.ErrorMessage = "Nom et Prénom incorrect !"
 			temp.ExecuteTemplate(w, "form", stockForm)
 			return
 		}
-
+		//Erreur dans le nom
 		if !CheckNom {
 			stockForm.ErrorMessage = "Nom incorrect !"
 			temp.ExecuteTemplate(w, "form", stockForm)
 			return
 		}
+		//Erreur dans le prenom
 		if !CheckPrenom {
 			stockForm.ErrorMessage = "Prénom incorrect !"
 			temp.ExecuteTemplate(w, "form", stockForm)
 			return
 		}
-
+		//Si tout est bon dans le formulaire, redirige l'utilisateur vers display qui affiche le résultat
 		http.Redirect(w, r, "/form/display", http.StatusSeeOther)
 	})
 
@@ -149,6 +153,6 @@ func main() {
 		}
 		temp.ExecuteTemplate(w, "display", dataform)
 	})
-
+	//Démarrage du serveur
 	http.ListenAndServe("localhost:8080", nil)
 }
